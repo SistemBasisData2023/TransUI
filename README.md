@@ -49,8 +49,8 @@ To book an online ojek, follow these steps:
 ## Contributors
 The following individuals have contributed to the development of TransUI:
 1. Rezki Muhammad
-rezkimd | https://github.com/rezkimd
+| rezkimd | https://github.com/rezkimd
 2. Aliefya Fikri Ihsani
-AliefyaFikri | https://github.com/AliefyaFikri
+| AliefyaFikri | https://github.com/AliefyaFikri
 3. Leonardo Jeremy Pongpare Munda
-leonardojeremy14 | https://github.com/leonardojeremy14
+| leonardojeremy14 | https://github.com/leonardojeremy14
