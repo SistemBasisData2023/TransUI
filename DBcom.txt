@@ -82,3 +82,5 @@ psql -h ep-empty-recipe-891243-pooler.ap-southeast-1.aws.neon.tech -U rezkimuham
 \copy Sched_bikun FROM 'C:\Users\rezki\Downloads\jadwal_bis.csv' DELIMITER ',' CSV HEADER;
 
 \copy Sched_krl FROM 'C:\Users\rezki\Downloads\jadwal_kereta.csv' DELIMITER ',' CSV HEADER;
+
+pg_dump -U rezkimuhammad60 -h ep-empty-recipe-891243-pooler.ap-southeast-1.aws.neon.tech -p 5432 -d TransUI >> TransUI.sql

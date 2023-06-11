@@ -16,32 +16,6 @@
     </form>
     <br>
 
-    <!-- <div id="locationInput">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" required>
-            <br>
-        </div>
-
-        <div id="chargerPointInput">
-            <label for="chargerPoint">Charger Point:</label>
-            <input type="checkbox" id="chargerPoint" name="chargerPoint" value="1">
-            <br>
-        </div>
-
-        <div id="parkPointInput">
-            <label for="parkPoint">Park Point:</label>
-            <input type="checkbox" id="parkPoint" name="parkPoint" value="1">
-            <br>
-        </div>
-
-        <div id="busStopInput">
-            <label for="busStop">Bus Stop:</label>
-            <input type="checkbox" id="busStop" name="busStop" value="1">
-            <br>
-        </div>
-
-        <button type="submit">Submit</button> -->
-
     <script src="../Backend/DropControl.js"></script>
     <script>
         // Mendengarkan perubahan pada elemen select
@@ -72,14 +46,14 @@
             if (upSub) {
                 upSub.remove();
             }
-            if(delSub){
+            if (delSub) {
                 delSub.remove();
             }
-            if(addSub){
+            if (addSub) {
                 addSub.remove();
             }
 
-            // Memeriksa jika opsi "Update Drop Point" atau "Tambah Drop Point" dipilih
+            // Memeriksa jika opsi "Tambah Drop Point" dipilih
             if (selectedOperation === 'add') {
                 // Membuat elemen input teks lokasi
                 locationInput = document.createElement('div');
@@ -131,9 +105,9 @@
                 dropPointForm.appendChild(chargerPointInput);
                 dropPointForm.appendChild(parkPointInput);
                 dropPointForm.appendChild(busStopInput);
-                dropPointForm.appendChild(submitTrigger);
+                dropPointForm.appendChild(addSub);
             }
-
+            // Memeriksa jika opsi "Update Drop Point" dipilih
             if (selectedOperation === 'update') {
                 // Membuat elemen input teks lokasi
                 locationInput = document.createElement('div');
@@ -141,8 +115,7 @@
                 locationInput.innerHTML = `
       <label for="location">Location:</label>
       <input type="text" id="location" name="location" required>
-      <br>
-    `;
+      <br>`;
 
                 // Membuat elemen input checkbox charger point
                 chargerPointInput = document.createElement('div');
@@ -171,11 +144,11 @@
       <br>
     `;
                 // Membuat elemen submit untuk mengumpulkan form
-                submitTrigger = document.createElement('div');
-                submitTrigger.id = 'submitTrigger';
-                submitTrigger.innerHTML = `
-      <label for="submitTrigger">Submit:</label>
-      <input type="submit" id="submitTrigger" name="submitTrigger">
+                upSub = document.createElement('div');
+                upSub.id = 'upSub';
+                upSub.innerHTML = `
+      <label for="upSub">Update:</label>
+      <input type="submit" id="upSub" name="upSub">
       <br>
     `;
 
@@ -185,9 +158,9 @@
                 dropPointForm.appendChild(chargerPointInput);
                 dropPointForm.appendChild(parkPointInput);
                 dropPointForm.appendChild(busStopInput);
-                dropPointForm.appendChild(submitTrigger);
+                dropPointForm.appendChild(upSub);
             }
-
+            // Memeriksa jika opsi "Delete Drop Point" dipilih
             else {
                 // Membuat elemen input teks lokasi
                 locationInput = document.createElement('div');
@@ -199,17 +172,17 @@
         `;
 
                 // Membuat elemen submit untuk mengumpulkan form
-                submitTrigger = document.createElement('div');
-                submitTrigger.id = 'submitTrigger';
-                submitTrigger.innerHTML = `
-            <label for="submitTrigger">Submit:</label>
-            <input type="submit" id="submitTrigger" name="submitTrigger">
+                delSub = document.createElement('div');
+                delSub.id = 'delSub';
+                delSub.innerHTML = `
+            <label for="delSub">delete:</label>
+            <input type="submit" id="delSub" name="delSub">
             <br>
         `;
                 // Menambahkan elemen input ke dalam form
                 var dropPointForm = document.getElementById('dropPointForm');
                 dropPointForm.appendChild(locationInput);
-                dropPointForm.appendChild(submitTrigger);
+                dropPointForm.appendChild(delSub);
             }
         });
 
