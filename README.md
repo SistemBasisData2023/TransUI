@@ -20,33 +20,33 @@ git clone https://github.com/SistemBasisData2023/TransUI
 2. Go to Backend folder and run DBscript.js
 3. 
 
-##Usage 
+## Usage 
 Once the TransUI Mobile WebApp is running, users can access the following features:
 
-##1. Bike Rental
+## 1. Bike Rental
 To borrow a bicycle, follow these steps:
 1. Open the "Sepeda" Section
 2. Tap on "Pinjam"
 3. Choose bike to borrow
 4. After you finished using the bike, you can return the bike and pay the price
 
-##2. Bus Schedule
+## 2. Bus Schedule
 To view the bus departure schedule, follow these steps:
 1. Open the "Bikun" Section
 2. You can view the departure time of buses and move back and forth through the schedule by clicking Next or Prev
 
-##3. Commuter Line (KRL) Schedule
+## 3. Commuter Line (KRL) Schedule
 To check the arrival schedule of KRL trains at the University of Indonesia Station, follow these steps:
 1. Open the "KRL" Section
 2. You can view the arival time of KRL in Universitas indonesia Station and move back and forth through the schedule by clicking Next or Prev
 
-##4. Ojek Booking
+## 4. Ojek Booking
 To book an online ojek, follow these steps: 
 1. Open the "Ojek" Section
 2. Choose your destination
 3. Click Order
 
-##Contributors
+## Contributors
 The following individuals have contributed to the development of TransUI:
 1. Rezki Muhammad
 rezkimd | https://github.com/rezkimd
