@@ -65,4 +65,10 @@ router.get('/ADMIN', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin.html'));
 });
 
+//BRIDGE UNTUK KE FITUR PENGENDALI OLEH ADMIN
+router.get('/dropCont', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dropControl.html'));
+});
+
+
 module.exports = router;

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drop Point Control</title>
+</head>
+
+<body>
+    <form id="dropPointForm">
+        <label for="operation">Pilih Operasi:</label>
+        <select id="operation" name="operation">
+            <option value="add">Tambah Drop Point</option>
+            <option value="update">Update Drop Point</option>
+            <option value="delete">Hapus Drop Point</option>
+        </select>
+    </form>
+    <br>
+
+    <!-- <div id="locationInput">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <br>
+        </div>
+
+        <div id="chargerPointInput">
+            <label for="chargerPoint">Charger Point:</label>
+            <input type="checkbox" id="chargerPoint" name="chargerPoint" value="1">
+            <br>
+        </div>
+
+        <div id="parkPointInput">
+            <label for="parkPoint">Park Point:</label>
+            <input type="checkbox" id="parkPoint" name="parkPoint" value="1">
+            <br>
+        </div>
+
+        <div id="busStopInput">
+            <label for="busStop">Bus Stop:</label>
+            <input type="checkbox" id="busStop" name="busStop" value="1">
+            <br>
+        </div>
+
+        <button type="submit">Submit</button> -->
+
+    <script src="../Backend/DropControl.js"></script>
+    <script>
+        // Mendengarkan perubahan pada elemen select
+        document.getElementById('operation').addEventListener('change', function () {
+            var selectedOperation = this.value;
+
+            // Menghapus komponen sebelumnya jika ada
+            var locationInput = document.getElementById('locationInput');
+            var chargerPointInput = document.getElementById('chargerPointInput');
+            var parkPointInput = document.getElementById('parkPointInput');
+            var busStopInput = document.getElementById('busStopInput');
+            var delSub = document.getElementById('delSub');
+            var upSub = document.getElementById('upSub');
+            var addSub = document.getElementById('addSub');
+
+            if (locationInput) {
+                locationInput.remove();
+            }
+            if (chargerPointInput) {
+                chargerPointInput.remove();
+            }
+            if (parkPointInput) {
+                parkPointInput.remove();
+            }
+            if (busStopInput) {
+                busStopInput.remove();
+            }
+            if (upSub) {
+                upSub.remove();
+            }
+            if(delSub){
+                delSub.remove();
+            }
+            if(addSub){
+                addSub.remove();
+            }
+
+            // Memeriksa jika opsi "Update Drop Point" atau "Tambah Drop Point" dipilih
+            if (selectedOperation === 'add') {
+                // Membuat elemen input teks lokasi
+                locationInput = document.createElement('div');
+                locationInput.id = 'locationInput';
+                locationInput.innerHTML = `
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required>
+      <br>
+    `;
+
+                // Membuat elemen input checkbox charger point
+                chargerPointInput = document.createElement('div');
+                chargerPointInput.id = 'chargerPointInput';
+                chargerPointInput.innerHTML = `
+      <label for="chargerPoint">Charger Point:</label>
+      <input type="checkbox" id="chargerPoint" name="chargerPoint" value="1">
+      <br>
+    `;
+
+                // Membuat elemen input checkbox park point
+                parkPointInput = document.createElement('div');
+                parkPointInput.id = 'parkPointInput';
+                parkPointInput.innerHTML = `
+      <label for="parkPoint">Park Point:</label>
+      <input type="checkbox" id="parkPoint" name="parkPoint" value="1">
+      <br>
+    `;
+
+                // Membuat elemen input checkbox bus stop
+                busStopInput = document.createElement('div');
+                busStopInput.id = 'busStopInput';
+                busStopInput.innerHTML = `
+      <label for="busStop">Bus Stop:</label>
+      <input type="checkbox" id="busStop" name="busStop" value="1">
+      <br>
+    `;
+                // Membuat elemen submit untuk mengumpulkan form
+                addSub = document.createElement('div');
+                addSub.id = 'addSub';
+                addSub.innerHTML = `
+      <label for="addSub">Submit:</label>
+      <input type="submit" id="addSub" name="addSub">
+      <br>
+    `;
+
+                // Menambahkan elemen-elemen input ke dalam form
+                var dropPointForm = document.getElementById('dropPointForm');
+                dropPointForm.appendChild(locationInput);
+                dropPointForm.appendChild(chargerPointInput);
+                dropPointForm.appendChild(parkPointInput);
+                dropPointForm.appendChild(busStopInput);
+                dropPointForm.appendChild(submitTrigger);
+            }
+
+            if (selectedOperation === 'update') {
+                // Membuat elemen input teks lokasi
+                locationInput = document.createElement('div');
+                locationInput.id = 'locationInput';
+                locationInput.innerHTML = `
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required>
+      <br>
+    `;
+
+                // Membuat elemen input checkbox charger point
+                chargerPointInput = document.createElement('div');
+                chargerPointInput.id = 'chargerPointInput';
+                chargerPointInput.innerHTML = `
+      <label for="chargerPoint">Charger Point:</label>
+      <input type="checkbox" id="chargerPoint" name="chargerPoint" value="1">
+      <br>
+    `;
+
+                // Membuat elemen input checkbox park point
+                parkPointInput = document.createElement('div');
+                parkPointInput.id = 'parkPointInput';
+                parkPointInput.innerHTML = `
+      <label for="parkPoint">Park Point:</label>
+      <input type="checkbox" id="parkPoint" name="parkPoint" value="1">
+      <br>
+    `;
+
+                // Membuat elemen input checkbox bus stop
+                busStopInput = document.createElement('div');
+                busStopInput.id = 'busStopInput';
+                busStopInput.innerHTML = `
+      <label for="busStop">Bus Stop:</label>
+      <input type="checkbox" id="busStop" name="busStop" value="1">
+      <br>
+    `;
+                // Membuat elemen submit untuk mengumpulkan form
+                submitTrigger = document.createElement('div');
+                submitTrigger.id = 'submitTrigger';
+                submitTrigger.innerHTML = `
+      <label for="submitTrigger">Submit:</label>
+      <input type="submit" id="submitTrigger" name="submitTrigger">
+      <br>
+    `;
+
+                // Menambahkan elemen-elemen input ke dalam form
+                var dropPointForm = document.getElementById('dropPointForm');
+                dropPointForm.appendChild(locationInput);
+                dropPointForm.appendChild(chargerPointInput);
+                dropPointForm.appendChild(parkPointInput);
+                dropPointForm.appendChild(busStopInput);
+                dropPointForm.appendChild(submitTrigger);
+            }
+
+            else {
+                // Membuat elemen input teks lokasi
+                locationInput = document.createElement('div');
+                locationInput.id = 'locationInput';
+                locationInput.innerHTML = `
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <br>
+        `;
+
+                // Membuat elemen submit untuk mengumpulkan form
+                submitTrigger = document.createElement('div');
+                submitTrigger.id = 'submitTrigger';
+                submitTrigger.innerHTML = `
+            <label for="submitTrigger">Submit:</label>
+            <input type="submit" id="submitTrigger" name="submitTrigger">
+            <br>
+        `;
+                // Menambahkan elemen input ke dalam form
+                var dropPointForm = document.getElementById('dropPointForm');
+                dropPointForm.appendChild(locationInput);
+                dropPointForm.appendChild(submitTrigger);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
