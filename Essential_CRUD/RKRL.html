@@ -30,8 +30,8 @@
     <table id="data-table">
         <thead>
             <tr>
-                <th>Kode_kereta</th>
-                <th>Jam_tiba</th>
+                <th>Kode Kereta</th>
+                <th>Jam Tiba</th>
                 <th>Stamformasi</th>
                 <th>Tujuan</th>
             </tr>
@@ -48,18 +48,18 @@
                 dataType: 'json',
                 success: function (response) {
                     // Memperbarui tabel dengan data yang diterima dari server
-                    const data = response.data;
+                    const data = response;
                     const tableBody = $('#data-table tbody');
 
                     data.forEach(function (row) {
                         const newRow = `
-              <tr>
-                <td>${row.Kode_kerta}</td>
-                <td>${row.Jam_tiba}</td>
-                <td>${row.Stamformasi}</td>
-                <td>${row.Tujuan}<td>
-              </tr>
-            `;
+                            <tr>
+                                <td>${row.Kode_kereta}</td>
+                                <td>${row.Jam_tiba}</td>
+                                <td>${row.Stamformasi}</td>
+                                <td>${row.Tujuan}</td>
+                            </tr>
+                        `;
                         tableBody.append(newRow);
                     });
                 },

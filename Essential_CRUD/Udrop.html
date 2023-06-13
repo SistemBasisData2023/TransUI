@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drop Point CRUD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <h2>Update Drop Point</h2>
+    <form id="update-form">
+        <label for="drop-id-input">Drop ID:</label>
+        <input type="text" id="drop-id-input" placeholder="Drop ID" required><br>
+        <label for="update-location-input">Location:</label>
+        <input type="text" id="update-location-input" placeholder="Location" required><br>
+        <label for="update-charger-point-input">Charger Point:</label>
+        <input type="checkbox" id="update-charger-point-input"><br>
+        <label for="update-park-point-input">Park Point:</label>
+        <input type="checkbox" id="update-park-point-input"><br>
+        <label for="update-bus-stop-input">Bus Stop:</label>
+        <input type="checkbox" id="update-bus-stop-input"><br>
+        <button type="submit">Update Drop Point</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Event listener saat form update-form disubmit
+            $('#update-form').submit(function (event) {
+                event.preventDefault();
+                const dropId = $('#drop-id-input').val();
+                const location = $('#update-location-input').val();
+                const chargerPoint = $('#update-charger-point-input').is(':checked');
+                const parkPoint = $('#update-park-point-input').is(':checked');
+                const busStop = $('#update-bus-stop-input').is(':checked');
+
+                $.ajax({
+                    url: `/api/drop_point/${dropId}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ location, charger_point: chargerPoint, park_point: parkPoint, bus_stop: busStop }),
+                    success: function (response) {
+                        alert('Drop point updated successfully');
+                        refreshDropPointList();
+                        $('#update-form')[0].reset();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('An error occurred while updating drop point');
+                    }
+                });
+            });
+
+            // Fungsi untuk mendapatkan daftar drop point dan memperbarui tabel
+            function refreshDropPointList() {
+                $.ajax({
+                    url: '/api/drop_point',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        const data = response.data;
+                        const tableBody = $('#drop-point-table tbody');
+                        tableBody.empty();
+
+                        data.forEach(function (row) {
+                            const newRow = `
+                                <tr>
+                                    <td>${row.drop_id}</td>
+                                    <td>${row.location}</td>
+                                    <td>${row.charger_point}</td>
+                                    <td>${row.park_point}</td>
+                                    <td>${row.bus_stop}</td>
+                                </tr>
+                            `;
+                            tableBody.append(newRow);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+            // Panggil fungsi refreshDropPointList saat halaman dimuat
+            refreshDropPointList();
+        });
+    </script>
+</body>
+
+</html>

@@ -37,6 +37,18 @@ router.get('/krl', (req, res) => {
     res.sendFile(path.join(__dirname, '../krl.html'));
 });
 
+router.get('/spekun', (req, res) => {
+    res.sendFile(path.join(__dirname, '../sepeda.html'));
+});
+
+router.get('/spekun2', (req, res) => {
+    res.sendFile(path.join(__dirname, '../sepeda2.html'));
+});
+
+router.get('/spekun3', (req, res) => {
+    res.sendFile(path.join(__dirname, '../sepeda3.html'));
+});
+
 router.get('/editprofile', (req, res) => {
     res.sendFile(path.join(__dirname, '../edit-profile.html'));
 });
@@ -101,5 +113,39 @@ router.get('/UKRL', (req, res) => {
 router.get('/DKRL', (req, res) => {
     res.sendFile(path.join(__dirname, '../Essential_CRUD/DKRL.html'));
 });
+
+router.get('/Cspekun', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Cspekun.html'));
+});
+
+router.get('/Rspekun', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Rspekun.html'));
+});
+
+router.get('/Uspekun', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Uspekun.html'));
+});
+
+router.get('/Dspekun', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Dspekun.html'));
+});
+
+router.get('/Cdrop', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Cdrop.html'));
+});
+
+router.get('/Udrop', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Udrop.html'));
+});
+
+router.get('/Rdrop', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Rdrop.html'));
+});
+
+router.get('/Ddrop', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Essential_CRUD/Ddrop.html'));
+});
+
+
 
 module.exports = router;

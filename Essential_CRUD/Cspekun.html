@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Data - Spekun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Tambah Data Spekun</h1>
+    <form id="create-form">
+        <label for="spekun-id-input">Spekun ID:</label>
+        <input type="text" id="spekun-id-input" placeholder="Spekun ID" required><br>
+
+        <label for="rider-input">Rider:</label>
+        <input type="text" id="rider-input" placeholder="Rider" required><br>
+
+        <label for="drop-loc-input">Drop Location:</label>
+        <input type="text" id="drop-loc-input" placeholder="Drop Location" required><br>
+
+        <label for="fuel-input">Fuel:</label>
+        <input type="number" id="fuel-input" placeholder="Fuel" required><br>
+
+        <label for="status-input">Status:</label>
+        <select id="status-input" required>
+            <option value="Used">Used</option>
+            <option value="Available">Available</option>
+            <option value="Charging">Charging</option>
+            <option value="Broken">Broken</option>
+        </select>
+
+        <button type="submit">Tambah Data Spekun</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            $('#create-form').submit(function (event) {
+                event.preventDefault();
+                const spekunID = $('#spekun-id-input').val();
+                const rider = $('#rider-input').val();
+                const dropLoc = $('#drop-loc-input').val();
+                const fuel = $('#fuel-input').val();
+                const status = $('#status-input').val();
+
+                $.ajax({
+                    url: '/api/spekun',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ spekun_id: spekunID, rider: rider, drop_loc: dropLoc, fuel: fuel, status: status }),
+                    success: function (response) {
+                        alert('Data Spekun berhasil ditambahkan');
+                        $('#create-form')[0].reset();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('Terjadi kesalahan saat menambahkan data Spekun');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

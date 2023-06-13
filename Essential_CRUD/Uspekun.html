@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Data - Spekun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Update Data Spekun</h1>
+    <form id="update-form">
+        <label for="spekun-id-input">Spekun ID:</label>
+        <input type="text" id="spekun-id-input" placeholder="Spekun ID" required><br>
+
+        <label for="rider-input">Rider:</label>
+        <input type="text" id="rider-input" placeholder="Rider" required><br>
+
+        <label for="drop-loc-input">Drop Location:</label>
+        <input type="text" id="drop-loc-input" placeholder="Drop Location" required><br>
+
+        <label for="fuel-input">Fuel:</label>
+        <input type="number" id="fuel-input" placeholder="Fuel" required><br>
+
+        <label for="status-input">Status:</label>
+        <input type="text" id="status-input" placeholder="Status" required><br>
+
+        <button type="submit">Update Data Spekun</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            $('#update-form').submit(function (event) {
+                event.preventDefault();
+                const spekunID = $('#spekun-id-input').val();
+                // Get the values of other input fields for update
+
+                $.ajax({
+                    url: `/api/spekun/${spekunID}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ spekun_id: spekunID, /* other column values */ }),
+                    success: function (response) {
+                        alert('Data Spekun berhasil diperbarui');
+                        $('#update-form')[0].reset();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('Terjadi kesalahan saat memperbarui data Spekun');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

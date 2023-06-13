@@ -49,19 +49,19 @@ CREATE TABLE "ride_history" (
 );
 
 CREATE TABLE "spekun" (
-    "Spekun_ID" VARCHAR(20) PRIMARY KEY,
-    "Rider" VARCHAR(20),
-    "Drop_loc" VARCHAR(20),
-    "Fuel" INT NOT NULL,
-    "Status" avail NOT NULL
+    spekun_id Char(5) PRIMARY KEY,
+    rider VARCHAR(20),
+    drop_loc VARCHAR(20),
+    fuel INT NOT NULL,
+    status TEXT not null
 );
 
 CREATE TABLE "drop_point" (
-    "Drop_ID" SERIAL PRIMARY KEY, 
-    "Location" VARCHAR(20) NOT NULL,
-    "Charger_point" Boolean NOT NULL,
-    "Park_point" Boolean NOT NULL,
-    "Bus_Stop" Boolean NOT NUll
+    drop_id SERIAL PRIMARY KEY, 
+    location VARCHAR(20) NOT NULL,
+    charger_point Boolean NOT NULL,
+    park_point Boolean NOT NULL,
+    bus_stop Boolean NOT NUll
 );
 
 CREATE TABLE Sched_bikun(

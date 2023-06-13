@@ -221,12 +221,12 @@ app.put('/api/users/:id', async (req, res) => {
 //Untuk Menambahkan data sepeda
 app.post('/api/bikes', async (req, res) => {
     try {
-        const { specunId, dropLocation, userId, fuel, status } = req.body;
+        const { SpekunId, dropLocation, Rider, fuel, status } = req.body;
 
         // Masukkan data sepeda ke dalam tabel "bikes"
         const result = await pool.query(
-            'INSERT INTO bikes (specun_id, drop_location, user_id, fuel, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [specunId, dropLocation, userId, fuel, status]
+            'INSERT INTO bikes (spekun_id, drop_loc, Rider, fuel, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [SpekunId, dropLocation, userId, fuel, status]
         );
 
         // Mengirimkan respons berhasil dengan data sepeda yang baru ditambahkan
@@ -265,7 +265,7 @@ module.exports = app, pool, router;
 //BIKUN_WISE
 app.get('/api/Rbikun', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM Sche_bikun');
+        const result = await pool.query('SELECT * FROM sched_bikun');
         res.json(result.rows);
     } catch (error) {
         console.error('Error:', error);
@@ -277,7 +277,7 @@ app.post('/api/Cbikun', async (req, res) => {
     try {
         const { Plat_nomor, Waktu_berangkat, jalur } = req.body;
         const result = await pool.query(
-            'INSERT INTO Sche_bikun (Plat_nomor, Waktu_berangkat, jalur) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO sched_bikun (Plat_nomor, Waktu_berangkat, jalur) VALUES ($1, $2, $3) RETURNING *',
             [Plat_nomor, Waktu_berangkat, jalur]
         );
         res.status(201).json({ message: 'Data berhasil ditambahkan', data: result.rows[0] });
@@ -290,7 +290,7 @@ app.post('/api/Cbikun', async (req, res) => {
 app.delete('/api/Dbikun/:Plat_nomor', async (req, res) => {
     const { Plat_nomor } = req.params;
     try {
-        const result = await pool.query('DELETE FROM Sche_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
+        const result = await pool.query('DELETE FROM sched_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
         res.json({ message: 'Data berhasil dihapus' });
     } catch (error) {
         console.error('Error:', error);
@@ -303,15 +303,15 @@ app.put('/api/Ubikun/:Plat_nomor', async (req, res) => {
     const { Waktu_berangkat, jalur } = req.body;
 
     try {
-        // Periksa apakah Plat_nomor ada di tabel Sche_bikun
-        const checkData = await pool.query('SELECT * FROM Sche_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
+        // Periksa apakah Plat_nomor ada di tabel sched_bikun
+        const checkData = await pool.query('SELECT * FROM sched_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
         if (checkData.rows.length === 0) {
             return res.status(404).json({ message: 'Data tidak ditemukan' });
         }
 
         // Update data
         const result = await pool.query(
-            'UPDATE Sche_bikun SET Waktu_berangkat = $1, jalur = $2 WHERE Plat_nomor = $3 RETURNING *',
+            'UPDATE sched_bikun SET Waktu_berangkat = $1, jalur = $2 WHERE Plat_nomor = $3 RETURNING *',
             [Waktu_berangkat, jalur, Plat_nomor]
         );
 
@@ -387,5 +387,149 @@ app.put('/api/UKRL/:Kode_kereta', async (req, res) => {
 });
 
 
-//WISE Droploc
+//WISE Spekun
+app.post('/api/spekun', async (req, res) => {
+    try {
+        const { spekun_id, Rider, drop_loc, fuel, status } = req.body;
 
+        // Insert data ke tabel Spekun
+        const result = await pool.query(
+            'INSERT INTO spekun (spekun_id, Rider, drop_loc, fuel, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [spekun_id, Rider, drop_loc, fuel, status]
+        );
+
+        res.status(201).json({ message: 'Data Spekun berhasil ditambahkan', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan data Spekun' });
+    }
+});
+
+
+app.get('/api/spekun', async (req, res) => {
+    try {
+        // Ambil semua data dari tabel Spekun
+        const result = await pool.query('SELECT * FROM spekun');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data Spekun' });
+    }
+});
+
+app.put('/api/spekun/:id', async (req, res) => {
+    const { id } = req.params;
+    const { Rider, drop_loc, fuel, status } = req.body;
+
+    try {
+        // Cek apakah data Spekun dengan ID yang diberikan ada di database
+        const spekun = await pool.query('SELECT * FROM spekun WHERE spekun_id = $1', [id]);
+        if (spekun.rows.length === 0) {
+            return res.status(404).json({ message: 'Data Spekun tidak ditemukan' });
+        }
+
+        // Update data Spekun
+        const result = await pool.query(
+            'UPDATE spekun SET Rider = $1, drop_loc = $2, fuel = $3, status = $4 WHERE spekun_id = $5 RETURNING *',
+            [Rider, drop_loc, fuel, status, id]
+        );
+
+        res.json({ message: 'Data Spekun berhasil diperbarui', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat memperbarui data Spekun' });
+    }
+});
+
+
+app.delete('/api/spekun/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Cek apakah data Spekun dengan ID yang diberikan ada di database
+        const spekun = await pool.query('SELECT * FROM spekun WHERE spekun_id = $1', [id]);
+        if (spekun.rows.length === 0) {
+            return res.status(404).json({ message: 'Data Spekun tidak ditemukan' });
+        }
+
+        // Hapus data Spekun
+        await pool.query('DELETE FROM spekun WHERE spekun_id = $1', [id]);
+
+        res.json({ message: 'Data Spekun berhasil dihapus' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menghapus data Spekun' });
+    }
+});
+
+app.post('/api/drop_point', async (req, res) => {
+    try {
+        const { location, charger_point, park_point, bus_stop } = req.body;
+
+        // Insert data into drop_point table
+        const result = await pool.query(
+            'INSERT INTO drop_point (location, charger_point, park_point, bus_stop) VALUES ($1, $2, $3, $4) RETURNING *',
+            [location, charger_point, park_point, bus_stop]
+        );
+
+        res.status(201).json({ message: 'Drop point data created successfully', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'An error occurred while creating drop point data' });
+    }
+});
+
+// Get all drop points
+app.get('/api/drop_point', async (req, res) => {
+    try {
+        // Retrieve all data from drop_point table
+        const result = await pool.query('SELECT * FROM drop_point');
+
+        res.status(200).json({ data: result.rows });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'An error occurred while retrieving drop point data' });
+    }
+});
+
+// Update a drop point
+app.put('/api/drop_point/:drop_id', async (req, res) => {
+    try {
+        const dropId = req.params.drop_id;
+        const { location, charger_point, park_point, bus_stop } = req.body;
+
+        // Update data in drop_point table
+        const result = await pool.query(
+            'UPDATE drop_point SET location = $1, charger_point = $2, park_point = $3, bus_stop = $4 WHERE drop_id = $5 RETURNING *',
+            [location, charger_point, park_point, bus_stop, dropId]
+        );
+
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'Drop point data not found' });
+        } else {
+            res.status(200).json({ message: 'Drop point data updated successfully', data: result.rows[0] });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'An error occurred while updating drop point data' });
+    }
+});
+
+// Delete a drop point
+app.delete('/api/drop_point/:drop_id', async (req, res) => {
+    try {
+        const dropId = req.params.drop_id;
+
+        // Delete data from drop_point table
+        const result = await pool.query('DELETE FROM drop_point WHERE drop_id = $1 RETURNING *', [dropId]);
+
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'Drop point data not found' });
+        } else {
+            res.status(200).json({ message: 'Drop point data deleted successfully', data: result.rows[0] });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'An error occurred while deleting drop point data' });
+    }
+});
