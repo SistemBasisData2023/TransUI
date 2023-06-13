@@ -258,3 +258,134 @@ app.listen(port, () => {
 });
 
 module.exports = app, pool, router;
+
+
+//ADMIN WISE
+
+//BIKUN_WISE
+app.get('/api/Rbikun', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM Sche_bikun');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data' });
+    }
+});
+
+app.post('/api/Cbikun', async (req, res) => {
+    try {
+        const { Plat_nomor, Waktu_berangkat, jalur } = req.body;
+        const result = await pool.query(
+            'INSERT INTO Sche_bikun (Plat_nomor, Waktu_berangkat, jalur) VALUES ($1, $2, $3) RETURNING *',
+            [Plat_nomor, Waktu_berangkat, jalur]
+        );
+        res.status(201).json({ message: 'Data berhasil ditambahkan', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan data' });
+    }
+});
+
+app.delete('/api/Dbikun/:Plat_nomor', async (req, res) => {
+    const { Plat_nomor } = req.params;
+    try {
+        const result = await pool.query('DELETE FROM Sche_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
+        res.json({ message: 'Data berhasil dihapus' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menghapus data' });
+    }
+});
+
+app.put('/api/Ubikun/:Plat_nomor', async (req, res) => {
+    const { Plat_nomor } = req.params;
+    const { Waktu_berangkat, jalur } = req.body;
+
+    try {
+        // Periksa apakah Plat_nomor ada di tabel Sche_bikun
+        const checkData = await pool.query('SELECT * FROM Sche_bikun WHERE Plat_nomor = $1', [Plat_nomor]);
+        if (checkData.rows.length === 0) {
+            return res.status(404).json({ message: 'Data tidak ditemukan' });
+        }
+
+        // Update data
+        const result = await pool.query(
+            'UPDATE Sche_bikun SET Waktu_berangkat = $1, jalur = $2 WHERE Plat_nomor = $3 RETURNING *',
+            [Waktu_berangkat, jalur, Plat_nomor]
+        );
+
+        res.json({ message: 'Data berhasil diperbarui', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat memperbarui data' });
+    }
+});
+
+//KRL WISE
+// Mendapatkan seluruh data pada tabel Sched_KRL
+app.get('/api/RKRL', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM Sched_KRL');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat membaca data Sched_KRL' });
+    }
+});
+
+// Menghapus data pada tabel Sched_KRL berdasarkan Kode_kereta
+app.delete('/api/DKRL/:Kode_kereta', async (req, res) => {
+    const { Kode_kereta } = req.params;
+
+    try {
+        const result = await pool.query('DELETE FROM Sched_KRL WHERE Kode_kereta = $1 RETURNING *', [Kode_kereta]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Data Sched_KRL tidak ditemukan' });
+        }
+        res.json({ message: 'Data Sched_KRL berhasil dihapus', data: result.rows[0] });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menghapus data Sched_KRL' });
+    }
+});
+
+// Menambahkan data ke tabel Sched_KRL
+app.post('/api/CKRL', async (req, res) => {
+    const { Kode_kereta, Jam_tiba, Stamformasi, Tujuan } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO Sched_KRL (Kode_kereta, Jam_tiba, Stamformasi, Tujuan) VALUES ($1, $2, $3, $4) RETURNING *',
+            [Kode_kereta, Jam_tiba, Stamformasi, Tujuan]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan data ke Sched_KRL' });
+    }
+});
+
+// Mengupdate data pada tabel Sched_KRL berdasarkan Kode_kereta
+app.put('/api/UKRL/:Kode_kereta', async (req, res) => {
+    const { Kode_kereta } = req.params;
+    const { Jam_tiba, Stamformasi, Tujuan } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE Sched_KRL SET Jam_tiba = $1, Stamformasi = $2, Tujuan = $3 WHERE Kode_kereta = $4 RETURNING *',
+            [Jam_tiba, Stamformasi, Tujuan, Kode_kereta]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Data Sched_KRL tidak ditemukan' });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat mengupdate data Sched_KRL' });
+    }
+});
+
+
+//WISE Droploc
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Data - Sche_bikun</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Tambah Data Sched_bikun</h1>
+
+    <form id="create-form">
+        <label for="plat_nomor">Plat Nomor:</label>
+        <input type="text" id="plat_nomor" name="plat_nomor" required><br>
+
+        <label for="waktu_berangkat">Waktu Berangkat:</label>
+        <input type="text" id="waktu_berangkat" name="waktu_berangkat" required><br>
+
+        <label for="jalur">Jalur:</label>
+        <input type="text" id="jalur" name="jalur" required><br>
+
+        <button type="submit">Tambah Data</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Event listener saat form disubmit
+            $('#create-form').submit(function (event) {
+                event.preventDefault();
+
+                // Mendapatkan data dari form
+                const plat_nomor = $('#plat_nomor').val();
+                const waktu_berangkat = $('#waktu_berangkat').val();
+                const jalur = $('#jalur').val();
+
+                // Mengirim data ke server menggunakan Ajax
+                $.ajax({
+                    url: '/api/Cbikun',
+                    method: 'POST',
+                    data: {
+                        Plat_nomor: plat_nomor,
+                        Waktu_berangkat: waktu_berangkat,
+                        jalur: jalur
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        alert('Data berhasil ditambahkan');
+                        // Reset form setelah data berhasil ditambahkan
+                        $('#create-form')[0].reset();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('Terjadi kesalahan saat menambahkan data');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

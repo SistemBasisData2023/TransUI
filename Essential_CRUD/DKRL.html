@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Delete Data - Sched_KRL</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Hapus Data Sched_KRL</h1>
+
+    <form id="delete-form">
+        <label for="kode-kereta-input">Kode Kereta:</label>
+        <input type="text" id="kode-kereta-input" name="kode-kereta" required><br>
+
+        <button type="submit">Hapus Data</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Event listener saat form disubmit
+            $('#delete-form').submit(function (event) {
+                event.preventDefault();
+
+                // Mendapatkan data dari form
+                const kodeKereta = $('#kode-kereta-input').val();
+
+                // Mengirim data ke server menggunakan Ajax
+                $.ajax({
+                    url: `/api/DKRL/${kodeKereta}`,
+                    method: 'DELETE',
+                    dataType: 'json',
+                    success: function (response) {
+                        alert('Data Sched_KRL berhasil dihapus');
+                        // Reset form setelah data berhasil dihapus
+                        $('#delete-form')[0].reset();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('Terjadi kesalahan saat menghapus data Sched_KRL');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

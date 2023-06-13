@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Create Data - Sched_KRL</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Tambah Jadwal KRL</h1>
+    <form id="create-form">
+        <label for="kode-kereta-input">Kode Kereta:</label>
+        <input type="text" id="kode-kereta-input" placeholder="Kode Kereta" required><br>
+
+        <label for="jam-tiba-input">Jam Tiba:</label>
+        <input type="text" id="jam-tiba-input" placeholder="Jam Tiba" required><br>
+
+        <label for="stamformasi-input">Stamformasi:</label>
+        <input type="number" id="stamformasi-input" placeholder="Stamformasi" required><br>
+
+        <label for="tujuan-input">Tujuan:</label>
+        <input type="text" id="tujuan-input" placeholder="Tujuan" required><br>
+        <button type="submit">Tambah Data Sched_KRL</button>
+    </form>
+
+    <script>
+        document.getElementById('create-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const kodeKereta = document.getElementById('kode-kereta-input').value;
+            const jamTiba = document.getElementById('jam-tiba-input').value;
+            const stamformasi = document.getElementById('stamformasi-input').value;
+            const tujuan = document.getElementById('tujuan-input').value;
+
+            fetch('/api/CKRL', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Kode_kereta: kodeKereta, Jam_tiba: jamTiba, Stamformasi: stamformasi, Tujuan: tujuan })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data Sched_KRL berhasil ditambahkan:', data);
+                    // Reset form
+                    document.getElementById('create-form').reset();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
